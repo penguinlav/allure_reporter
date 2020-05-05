@@ -1,7 +1,7 @@
 # Allure Reporter
 A tool for embedding Allure reports in ci pipeline.
 
-The utility stores results of previous starts for each revision to render all retries. The history of reports is preserved within the project branch.
+The utility stores the results of previous starts for each revision to render all retries. The history of reports is preserved within the project branch.
 
 Report generation example.
 ```
@@ -24,5 +24,5 @@ poetry install --no-dev
 #### Running
 ```
 poetry shell
-uvicorn allure_reporter.main:app --env-file .env --reload --reload-dir allure_reporter
+uvicorn allure_reporter.main:app --env-file .env
 ```
