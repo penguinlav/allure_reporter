@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  allure-reporter:
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+    command: uvicorn allure_reporter.main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - pytest.env
+    volumes:
+      - type: bind
+        source: ./../allure_reporter
+        target: /home/allure_reporter/allure_reporter
+    ports:
+    - 8000:8000
