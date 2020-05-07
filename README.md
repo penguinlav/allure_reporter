@@ -26,3 +26,28 @@ poetry install --no-dev
 poetry shell
 uvicorn allure_reporter.main:app --env-file .env
 ```
+
+#### Example ci job
+Suppose we have an image with tests that run in the image.
+```
+test:
+  stage: testing
+  image: image_with_pytests
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - rm -rf page
+  script:
+    - py.test --alluredir=allure-results /path_to_package_with_pytests/tests
+  after_script:
+    - # branch name, project.. you can get for environment from script
+    - python /path_to_package_with_pytests/scripts/generate_report.py --input=allure-results --output=report.zip  # write for yourself
+    - unzip -q report.zip -d page
+    - # script for sending page/mail.html with results for subscribers
+  artifacts:
+    paths:
+      - page/
+    expire_in: 1 week
+    when: always
+```
+Then you will be able to see the report in artifacts with `Browse` button.
